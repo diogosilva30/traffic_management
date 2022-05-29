@@ -96,43 +96,6 @@ class SpeedReading(models.Model):
         related_name="speed_readings",
     )
 
-    # @property
-    # def intensity(self) -> int:
-    #     """
-    #     Computed field for a road segment intensity at this particular speed reading.
-    #     Computed from `average_speed`.
-
-    #     Returns
-    #     -------
-    #     int
-    #         An integer representing the traffic intensity. Possible values: 0,1,2.
-    #     """
-    #     # If speed ]50, +inf]
-    #     if self.average_speed > 50:
-    #         return 0
-    #     # If speed ]20, 50]
-    #     elif self.average_speed > 20 and self.average_speed <= 50:
-    #         return 1
-    #     # If speed [-inf,20]
-    #     return 2
-
-    # @property
-    # def characterization(self) -> str:
-    #     """
-    #     Computed field for traffic characterization at this particular speed reading.
-    #     Computed from `intensity`.
-
-    #     Returns
-    #     -------
-    #     str
-    #         A string representing the traffic characterization. Possible values: `low`, `moderate`, `high`.
-    #     """
-    #     if self.intensity == 0:
-    #         return "low"
-    #     elif self.intensity == 1:
-    #         return "moderate"
-    #     return "high"
-
     class Meta:
         # Define the order of the model. Order by most recent speed reading
         ordering = ["-timestamp"]
