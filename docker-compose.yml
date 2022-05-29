@@ -25,6 +25,10 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: traffic_management_db
       POSTGRES_HOST: db # name of database service
+      # Default information for superuser
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_PASSWORD: admin
+      DJANGO_SUPERUSER_EMAIL: admin@example.com
 
   # Database service (PostgreSQL with PostGIS)
   db:
