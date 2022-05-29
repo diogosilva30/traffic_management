@@ -54,17 +54,6 @@ class CharacterizationFilter(filters.FilterSet):
             .filter(newest_speed_reading_characterization=value)
         )
 
-        return segments
-        raise ValueError(len(segments))
-
-        segments_ids = [
-            s.id
-            for s in segments
-            if SpeedReading.objects.get(pk=s.newest_speed_id).characterization == value
-        ]
-
-        return queryset.filter(pk__in=segments_ids)
-
     class Meta:
         model = RoadSegment
         fields = ["characterization"]
