@@ -44,17 +44,15 @@ class CharacterizationFilter(filters.FilterSet):
         )
         # First filter road segments without speed readings, then
         # annotate objects with the id of the latest reading
-        segments = RoadSegment.objects.exclude(speed_readings__isnull=True).annotate(
-            newest_speed_id=Subquery(newest.values("id")[:1]),
+        return (
+            RoadSegment.objects.exclude(speed_readings__isnull=True)
+            .annotate(
+                newest_speed_reading_characterization=Subquery(
+                    newest.values("characterization")[:1]
+                ),
+            )
+            .filter(newest_speed_reading_characterization=value)
         )
-
-        segments_ids = [
-            s.id
-            for s in segments
-            if SpeedReading.objects.get(pk=s.newest_speed_id).characterization == value
-        ]
-
-        return queryset.filter(pk__in=segments_ids)
 
     class Meta:
         model = RoadSegment

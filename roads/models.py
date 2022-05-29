@@ -30,11 +30,52 @@ class RoadSegment(models.Model):
         ordering = ["-speed_readings__timestamp"]
 
 
+class SpeedReadingManager(models.Manager):
+    """
+    Custom object manager for `SpeedReading` model.
+    """
+
+    def get_queryset(self):
+        """
+        Adds extra information (annotations) to the queryset,
+        about average speed.
+        """
+        from django.db.models import Case, Value, When, Q
+
+        return (
+            super()
+            .get_queryset()
+            .annotate(
+                # Annotate "intensity"
+                intensity=Case(
+                    When(average_speed__gt=50, then=Value(0)),
+                    When(
+                        Q(average_speed__gt=20) & Q(average_speed__lte=50),
+                        then=Value(1),
+                    ),
+                    default=Value(2),
+                ),
+                # Annotate "characterization"
+                characterization=Case(
+                    When(average_speed__gt=50, then=Value("low")),
+                    When(
+                        Q(average_speed__gt=20) & Q(average_speed__lte=50),
+                        then=Value("moderate"),
+                    ),
+                    default=Value("high"),
+                ),
+            )
+        )
+
+
 class SpeedReading(models.Model):
     """
     Model to save a speed reading at a particular instance,
     in a particular road segment.
     """
+
+    # Define the new custom object manager
+    objects = SpeedReadingManager()
 
     # The average speed in km/h
     average_speed = models.FloatField(verbose_name=_("Average Speed (km/h)"))
@@ -54,43 +95,6 @@ class SpeedReading(models.Model):
         verbose_name=_("Road Segment"),
         related_name="speed_readings",
     )
-
-    @property
-    def intensity(self) -> int:
-        """
-        Computed field for a road segment intensity at this particular speed reading.
-        Computed from `average_speed`.
-
-        Returns
-        -------
-        int
-            An integer representing the traffic intensity. Possible values: 0,1,2.
-        """
-        # If speed ]50, +inf]
-        if self.average_speed > 50:
-            return 0
-        # If speed ]20, 50]
-        elif self.average_speed > 20 and self.average_speed <= 50:
-            return 1
-        # If speed [-inf,20]
-        return 2
-
-    @property
-    def characterization(self) -> str:
-        """
-        Computed field for traffic characterization at this particular speed reading.
-        Computed from `intensity`.
-
-        Returns
-        -------
-        str
-            A string representing the traffic characterization. Possible values: `low`, `moderate`, `high`.
-        """
-        if self.intensity == 0:
-            return "low"
-        elif self.intensity == 1:
-            return "moderate"
-        return "high"
 
     class Meta:
         # Define the order of the model. Order by most recent speed reading
