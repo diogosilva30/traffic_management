@@ -7,6 +7,7 @@ from django_filters import rest_framework as filters
 
 from .models import RoadSegment, SpeedReading
 from .serializers import RoadSegmentSerializer, SpeedReadingSerializer
+from .filters import CharacterizationFilter
 
 
 class RoadSegmentViewset(viewsets.ModelViewSet):
@@ -19,9 +20,7 @@ class RoadSegmentViewset(viewsets.ModelViewSet):
     serializer_class = RoadSegmentSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     filter_backends = (filters.DjangoFilterBackend,)
-    # filterset_fields = [
-    #     "speed_readings__characterization",
-    # ]
+    filterset_class = CharacterizationFilter
 
 
 class SpeedReadingViewset(viewsets.ModelViewSet):
