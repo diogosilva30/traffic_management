@@ -19,6 +19,10 @@ git clone https://github.com/diogosilva30/traffic_management.git
 cd traffic_management
 docker-compose up --build -d
 ```
+Create a superuser:
+
+`docker exec -it backend python manage.py createsuperuser --noinput`. A superuser will be created with username `admin` and password `admin` (env variables defined in `docker-compose.yml`).
+
 You can now nagivate to [localhost:8000](http://localhost:8000) .
 
 ## Database pre-population
