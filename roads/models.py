@@ -30,34 +30,41 @@ class RoadSegment(models.Model):
         ordering = ["-speed_readings__timestamp"]
 
 
-class SpeedReadingQueryset(models.QuerySet):
+class SpeedReadingManager(models.Manager):
     """
-    Custom queryset for `SpeedReading` model.
+    Custom object manager for `SpeedReading` model.
     """
 
-    def with_inferred_info(self):
+    def get_queryset(self):
         """
         Adds extra information (annotations) to the queryset,
         about average speed.
         """
         from django.db.models import Case, Value, When, Q
 
-        return self.annotate(
-            # Annotate "intensity"
-            intensity=Case(
-                When(average_speed_gt=20, then=Value(0)),
-                When(Q(average_speed__gt=50) & Q(average_speed_lte=50), then=Value(1)),
-                default=Value(2),
-            ),
-            # Annotate "characterization"
-            characterization=Case(
-                When(average_speed_gt=20, then=Value("low")),
-                When(
-                    Q(average_speed__gt=50) & Q(average_speed_lte=50),
-                    then=Value("moderate"),
+        return (
+            super()
+            .get_queryset()
+            .annotate(
+                # Annotate "intensity"
+                intensity=Case(
+                    When(average_speed__gt=20, then=Value(0)),
+                    When(
+                        Q(average_speed__gt=50) & Q(average_speed__lte=50),
+                        then=Value(1),
+                    ),
+                    default=Value(2),
                 ),
-                default=Value("high"),
-            ),
+                # Annotate "characterization"
+                characterization=Case(
+                    When(average_speed__gt=20, then=Value("low")),
+                    When(
+                        Q(average_speed__gt=50) & Q(average_speed__lte=50),
+                        then=Value("moderate"),
+                    ),
+                    default=Value("high"),
+                ),
+            )
         )
 
 
@@ -68,7 +75,7 @@ class SpeedReading(models.Model):
     """
 
     # Define the new custom object manager
-    objects = SpeedReadingQueryset.as_manager()
+    objects = SpeedReadingManager()
 
     # The average speed in km/h
     average_speed = models.FloatField(verbose_name=_("Average Speed (km/h)"))
