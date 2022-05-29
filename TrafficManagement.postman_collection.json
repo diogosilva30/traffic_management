@@ -38,8 +38,11 @@
 									}
 								}
 							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -277,6 +280,34 @@
 							]
 						},
 						"description": "This endpoints lists all `RoadSegment` objects."
+					},
+					"response": []
+				},
+				{
+					"name": "Filter All RoadSegment by last Characterization",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/?characterization=low",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								""
+							],
+							"query": [
+								{
+									"key": "characterization",
+									"value": "low",
+									"description": "Can be \"low\", \"moderate\" or \"high\""
+								}
+							]
+						}
 					},
 					"response": []
 				},
