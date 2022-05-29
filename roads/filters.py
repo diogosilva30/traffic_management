@@ -49,7 +49,9 @@ class CharacterizationFilter(filters.FilterSet):
         )
 
         segments_ids = [
-            s.id for s in segments if s.newest_speed_id__characterization == value
+            s.id
+            for s in segments
+            if SpeedReading.objects.get(pk=s.newest_speed_id).characterization == value
         ]
 
         return queryset.filter(pk__in=segments_ids)
