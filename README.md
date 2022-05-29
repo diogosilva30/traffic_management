@@ -10,6 +10,8 @@ Endpoints:
 /road_segment/{road_segment_pk}/speed_readings/                     #  GET (List all object), POST methods.
 /road_segment/{road_segment_pk}/speed_readings/{speed_reading_pk}/  #  GET (List single object), PUT/PATCH (update), DELETE methods.
 ```
+:exclamation: A **Postman collection** is available in the repository for in-depth API exploration. Additionaly, 
+the API root path serves a **ReDoc** Documentation. :exclamation:
 
 ## How to start the project (docker-compose):
 ```
