@@ -38,14 +38,11 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "noauth"
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -312,7 +309,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/road_segment/?characterization=low",
+							"raw": "http://localhost:8000/api/road_segment/?characterization=moderate",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -326,8 +323,7 @@
 							"query": [
 								{
 									"key": "characterization",
-									"value": "low",
-									"description": "Can be \"low\", \"moderate\" or \"high\""
+									"value": "moderate"
 								}
 							]
 						}
