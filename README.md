@@ -18,3 +18,6 @@ cd traffic_management
 docker-compose up --build -d
 ```
 
+## Database pre-population
+The database is pre-populated using a [custom migration](https://github.com/diogosilva30/traffic_management/blob/master/roads/migrations/0002_auto_20220528_1635.py) to inject a [GitHub CSV Dataset](https://raw.githubusercontent.com/Ubiwhere/traffic_speed/master/traffic_speed.csv) using `pandas`.
+
