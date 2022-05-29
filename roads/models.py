@@ -48,18 +48,18 @@ class SpeedReadingManager(models.Manager):
             .annotate(
                 # Annotate "intensity"
                 intensity=Case(
-                    When(average_speed__gt=20, then=Value(0)),
+                    When(average_speed__gt=50, then=Value(0)),
                     When(
-                        Q(average_speed__gt=50) & Q(average_speed__lte=50),
+                        Q(average_speed__gt=20) & Q(average_speed__lte=50),
                         then=Value(1),
                     ),
                     default=Value(2),
                 ),
                 # Annotate "characterization"
                 characterization=Case(
-                    When(average_speed__gt=20, then=Value("low")),
+                    When(average_speed__gt=50, then=Value("low")),
                     When(
-                        Q(average_speed__gt=50) & Q(average_speed__lte=50),
+                        Q(average_speed__gt=20) & Q(average_speed__lte=50),
                         then=Value("moderate"),
                     ),
                     default=Value("high"),
