@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "1f65645d-3639-4b1d-bcc9-c6ebd8b90904",
+		"name": "TrafficManagement",
+		"description": "Traffic Management API\n\nURLs are organized as follows:\n\n``` json\n/road_segment/\n/road_segment/{road_segment_pk}/\n/road_segment/{road_segment_pk}/speed_readings/\n/road_segment/{road_segment_pk}/speed_readings/{speed_reading_pk}\n\n```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10668262"
+	},
+	"item": [
+		{
+			"name": "RoadSegment",
+			"item": [
+				{
+					"name": "SpeedReadings",
+					"item": [
+						{
+							"name": "Create SpeedReading",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Set the \"road_segment_pk\" with the id of the created `RoadSegment`\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"pm.collectionVariables.set(\"spead_reading_pk\",jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"average_speed\": {{$randomInt}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List All SpeedReading",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Detail SpeedReading",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/{{spead_reading_pk}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										"{{spead_reading_pk}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update SpeedReading",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// Perform update on `average_speed`.\r\n// For this model, `PUT` and `PATCH` are equivalent, since there is only 1 changable field\r\n// (average_speed).\r\n\r\n{\r\n    \"average_speed\": {{$randomInt}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/{{spead_reading_pk}}/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										"{{spead_reading_pk}}",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Partial Update SpeedReading",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"average_speed\": {{$randomInt}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/{{spead_reading_pk}}/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										"{{spead_reading_pk}}",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete SpeedReading",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/speed_readings/{{spead_reading_pk}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"road_segment",
+										"{{road_segment_pk}}",
+										"speed_readings",
+										"{{spead_reading_pk}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create RoadSegment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Set the \"road_segment_pk\" with the id of the created `RoadSegment`\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.collectionVariables.set(\"road_segment_pk\",jsonData.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"start\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"end\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"length\":{{$randomInt}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All RoadSegment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						},
+						"description": "This endpoints lists all `RoadSegment` objects."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detail RoadSegment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update RoadSegment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Perform a full update on the `RoadSegment` model.\r\n{\r\n    \"start\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"end\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"length\":{{$randomInt}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								"{{road_segment_pk}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Partial Update RoadSegment",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Perform a partial update on the `RoadSegment` length.\r\n{\r\n    \"length\":{{$randomInt}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								"{{road_segment_pk}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RoadSegment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/road_segment/{{road_segment_pk}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"road_segment",
+								"{{road_segment_pk}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "road_segment_pk",
+			"value": ""
+		},
+		{
+			"key": "spead_reading_pk",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+
+  # Service for the Django API
+  api:
+    container_name: backend
+    build: .
+    # Command to start the daphene server at port 8000
+    command: python manage.py runserver 0.0.0.0:8000
+    # command: daphne traffic_management.asgi:application 0.0.0.0:8000
+    volumes:
+      - .:/code/
+    # Serve at port 8000
+    ports:
+      - "8000:8000"
+    # Wait for DB to be operational
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    environment:
+      # Same setting as database bellow
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: traffic_management_db
+      POSTGRES_HOST: db # name of database service
+
+  # Database service (PostgreSQL with PostGIS)
+  db:
+    container_name: postgresql
+    image: postgis/postgis # Use PostgreSQL with PostGIS extension
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: always
+    # Usually we dont hardcode sensitive variables like this
+    # instead we would get from environment / Docker secrets/ Hashicorp Vault
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: traffic_management_db
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+
