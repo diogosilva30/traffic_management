@@ -1,6 +1,6 @@
 # Docker file to build Django Web API image with GeoDjango and PostGIS
 # Use slim variant for ligher image
-FROM python:3.9-slim
+FROM python:3.9
 
 # Set environment variables
 # Dont store logs in buffers, send to console
