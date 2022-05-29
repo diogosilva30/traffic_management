@@ -37,6 +37,7 @@ class CharacterizationFilter(filters.FilterSet):
             newest_speed_id=Subquery(newest.values("id")[:1]),
         )
 
+        [s for s in segments]
         print(segments[200].newest_speed_id)
 
         raise ValueError
