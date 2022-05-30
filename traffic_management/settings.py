@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework_gis",
     "django_filters",
     "drf_spectacular",
+    "debug_toolbar",
 ]
 
 # Project apps
@@ -51,6 +52,8 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE = [
+    # for debug
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -156,3 +159,8 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False
     # OTHER SETTINGS
 }
+import os  # only if you haven't already imported this
+import socket  # only if you haven't already imported this
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]

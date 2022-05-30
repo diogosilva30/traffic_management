@@ -16,7 +16,7 @@ class RoadSegmentViewset(viewsets.ModelViewSet):
     creation, update and deletion of segments if the user is an admin.
     """
 
-    queryset = RoadSegment.objects.all()
+    queryset = RoadSegment.objects.all().prefetch_related("speed_readings")
     serializer_class = RoadSegmentSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     filter_backends = (filters.DjangoFilterBackend,)
@@ -47,7 +47,10 @@ class SpeedReadingViewset(viewsets.ModelViewSet):
 
             raise Http404
 
-        return SpeedReading.objects.filter(road_segment=road_segment)
+        # Use inferred info from the custom manager.
+        return SpeedReading.objects.with_inferred_info().filter(
+            road_segment=road_segment
+        )
 
     def create(self, request, *args, **kwargs):
         """

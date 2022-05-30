@@ -1,6 +1,10 @@
 # Docker file to build Django Web API image with GeoDjango and PostGIS
-# Use slim variant for ligher image
 FROM python:3.9
+
+# Setup GEOS, PROJ and GDAL
+RUN apt-get update &&\
+    apt-get install -y binutils libproj-dev gdal-bin python3-gdal
+
 
 # Set environment variables
 # Dont store logs in buffers, send to console
@@ -13,12 +17,6 @@ COPY ./requirements.txt /code/requirements.txt
 RUN pip install --upgrade pip
 # Install any needed packages specified in requirements.txt
 RUN pip install -r /code/requirements.txt
-
-
-# Setup GEOS, PROJ and GDAL
-RUN apt-get update &&\
-    apt-get install -y binutils libproj-dev gdal-bin python3-gdal
-
 
 # Copy the current directory contents into the container at /code/
 COPY . /code/
