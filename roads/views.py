@@ -48,9 +48,7 @@ class SpeedReadingViewset(viewsets.ModelViewSet):
             raise Http404
 
         # Use inferred info from the custom manager.
-        return SpeedReading.objects.with_inferred_info().filter(
-            road_segment=road_segment
-        )
+        return SpeedReading.objects.filter(road_segment=road_segment)
 
     def create(self, request, *args, **kwargs):
         """
