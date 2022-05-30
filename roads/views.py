@@ -16,7 +16,7 @@ class RoadSegmentViewset(viewsets.ModelViewSet):
     creation, update and deletion of segments if the user is an admin.
     """
 
-    queryset = RoadSegment.objects.all().prefetch_related("speed_readings")
+    queryset = RoadSegment.objects.all()
     serializer_class = RoadSegmentSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
     filter_backends = (filters.DjangoFilterBackend,)
