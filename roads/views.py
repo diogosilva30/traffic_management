@@ -38,17 +38,19 @@ class SpeedReadingViewset(viewsets.ModelViewSet):
         """
         from django.shortcuts import get_object_or_404
 
+        road_segment_pk = self.kwargs["road_segment_pk"]
+
         try:
-            road_segment = get_object_or_404(
-                RoadSegment, id=self.kwargs["road_segment_pk"]
-            )
+            road_segment_pk = int(road_segment_pk)
         except ValueError:
             from django.http import Http404
 
             raise Http404
 
-        # Use inferred info from the custom manager.
-        return SpeedReading.objects.filter(road_segment=road_segment)
+        # Select related for performance boost
+        return SpeedReading.objects.filter(road_segment=road_segment_pk).select_related(
+            "road_segment"
+        )
 
     def create(self, request, *args, **kwargs):
         """
