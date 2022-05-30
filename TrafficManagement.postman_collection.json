@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1f65645d-3639-4b1d-bcc9-c6ebd8b90904",
+		"_postman_id": "bf20721e-7acc-4985-8dd2-b3fc5b2e7450",
 		"name": "TrafficManagement",
 		"description": "Traffic Management API\n\nURLs are organized as follows:\n\n``` json\n/road_segment/\n/road_segment/{road_segment_pk}/\n/road_segment/{road_segment_pk}/speed_readings/\n/road_segment/{road_segment_pk}/speed_readings/{speed_reading_pk}\n\n```",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -39,9 +39,6 @@
 								}
 							],
 							"request": {
-								"auth": {
-									"type": "noauth"
-								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -130,7 +127,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "// Perform update on `average_speed`.\r\n// For this model, `PUT` and `PATCH` are equivalent, since there is only 1 changable field\r\n// (average_speed).\r\n\r\n{\r\n    \"average_speed\": {{$randomInt}}\r\n}",
+									"raw": "{\r\n    \"average_speed\": {{$randomInt}}\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -362,7 +359,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// Perform a full update on the `RoadSegment` model.\r\n{\r\n    \"start\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"end\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"length\":{{$randomInt}}\r\n}",
+							"raw": "{\r\n    \"start\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"end\":{\r\n        \"type\": \"Point\",\r\n        \"coordinates\": [{{$randomLatitude}}, {{$randomLongitude}}]\r\n    },\r\n    \"length\":{{$randomInt}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -393,7 +390,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// Perform a partial update on the `RoadSegment` length.\r\n{\r\n    \"length\":{{$randomInt}}\r\n}",
+							"raw": "{\r\n    \"length\":{{$randomInt}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
