@@ -82,15 +82,6 @@ class RoadSegmentSerializer(serializers.HyperlinkedModelSerializer):
     API Serializer for model `RoadSegment`.
     """
 
-    speed_readings = NestedHyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name="road_segment-speed_readings-detail",
-        parent_lookup_kwargs={"road_segment_pk": "road_segment__pk"}
-        # ^-- SpeedReading queryset will .filter(road_segment__pk=road_segment_pk)
-        #     being road_segment_pk (ONE underscore) value from URL kwargs
-    )
-
     class Meta:
         model = RoadSegment
         fields = [
@@ -99,5 +90,4 @@ class RoadSegmentSerializer(serializers.HyperlinkedModelSerializer):
             "start",
             "end",
             "length",
-            "speed_readings",
         ]
