@@ -36,7 +36,6 @@ class SpeedReadingViewset(viewsets.ModelViewSet):
         Only retrieve speed readings that belong to the road segment
         primary key used in the URL.
         """
-        from django.shortcuts import get_object_or_404
 
         road_segment_pk = self.kwargs["road_segment_pk"]
 
